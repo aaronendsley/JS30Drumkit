@@ -2,55 +2,55 @@
     const drumData = [
         {
             keyName:"A",
-            dataKey:65,
+            dataKey:'KeyA',
             soundName:'clap',
             audioSrc:'sounds/clap.wav'
         },
         {
             keyName:"S",
-            dataKey:83,
+            dataKey:'KeyS',
             soundName:'hihat',
             audioSrc:'sounds/hihat.wav'
         },
         {
             keyName:"D",
-            dataKey:68,
+            dataKey:'KeyD',
             soundName:'kick',
             audioSrc:'sounds/kick.wav'
         },
         {
             keyName:"F",
-            dataKey:70,
+            dataKey:'KeyF',
             soundName:'openhat',
             audioSrc:'sounds/openhat.wav'
         },
         {
             keyName:"G",
-            dataKey:71,
+            dataKey:'KeyG',
             soundName:'boom',
             audioSrc:'sounds/boom.wav'
         },
         {
             keyName:"H",
-            dataKey:72,
+            dataKey:'KeyH',
             soundName:'ride',
             audioSrc:'sounds/ride.wav'
         },
         {
             keyName:"J",
-            dataKey:74,
+            dataKey:'KeyJ',
             soundName:'snare',
             audioSrc:'sounds/snare.wav'
         },
         {
             keyName:"K",
-            dataKey:75,
+            dataKey:'KeyK',
             soundName:'tom',
             audioSrc:'sounds/tom.wav'
         },
         {
             keyName:"L",
-            dataKey:76,
+            dataKey:'KeyL',
             soundName:'tink',
             audioSrc:'sounds/tink.wav'
         },
@@ -65,7 +65,9 @@ drumkit.appendChild(keyContainer);
 
 
 
+function playSound(){
 
+}
 
 /// create the buttons
 function createButton(data){
@@ -82,14 +84,19 @@ function createButton(data){
     buttonDiv.appendChild(keyboard);
     buttonDiv.appendChild(soundSpan);
     container.appendChild(buttonDiv);
+    buttonData.buttonref = buttonDiv;
 }
+
+
 
 function createAudio(data){
     const audioData = data;
     let audioTag = document.createElement('audio');
     audioTag.setAttribute('data-key', audioData.dataKey);
     audioTag.setAttribute('src', audioData.audioSrc);
+
     drumkit.appendChild(audioTag);
+    audioData.audioTag = audioTag;
 
 }
 
@@ -100,7 +107,21 @@ drumData.forEach(function(element){
     createAudio(element); 
 })
    
+window.addEventListener('keydown', function(event){
+    console.log(event);
+    drumData.map(function(item){
+        if(event.code === item.dataKey){
+            if(item.audioTag.paused){
+                item.audioTag.play();
+                console.log(item.audioTag);
+            }else{
+                item.audioTag.paused = true;
+                item.audioTag.currentTime = 0;
+                item.audioTag.play();
+            }
+            
+        }
+    })
+})
 
 
-
-console.log(drumkit);
