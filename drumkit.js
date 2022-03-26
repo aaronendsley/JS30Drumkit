@@ -94,6 +94,7 @@ function createAudio(data){
     let audioTag = document.createElement('audio');
     audioTag.setAttribute('data-key', audioData.dataKey);
     audioTag.setAttribute('src', audioData.audioSrc);
+    audioTag.preload = 'true';
 
     drumkit.appendChild(audioTag);
     audioData.audioTag = audioTag;
@@ -108,12 +109,10 @@ drumData.forEach(function(element){
 })
    
 window.addEventListener('keydown', function(event){
-    console.log(event);
     drumData.map(function(item){
         if(event.code === item.dataKey){
             if(item.audioTag.paused){
                 item.audioTag.play();
-                console.log(item.audioTag);
             }else{
                 item.audioTag.paused = true;
                 item.audioTag.currentTime = 0;
